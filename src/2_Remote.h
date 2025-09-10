@@ -10,6 +10,7 @@
 // #define FLYSKY_GT5              // <------- Flysky GT5 / Reely GT6 EVO / Absima CR6P
 // #define RGT_EX86100             // <------- MT-305 remote delivered with RGT EX86100 crawler (use PWM communication setting)
 // #define GRAUPNER_MZ_12          // <------- Graupner MZ-12 PRO
+// #define GRAUPNER_MC_19
 // #define MICRO_RC                // <------- The car style DIY "Micro RC" remote. Don't use this with standard remotes!
 // #define MICRO_RC_STICK          // <------- The stick based DIY "Micro RC" remote. Don't use this with standard remotes!
 
@@ -41,6 +42,9 @@ uint16_t sbusFailsafeTimeout = 100; // Failsafe is triggered after this timeout 
 
 // PPM communication (RX header, 8 channels, working fine, but channel signals are a bit jittery) --------
 // #define PPM_COMMUNICATION // control signals are coming in via the PPM interface (comment it out for classic PWM RC signals)
+
+// SRXL1/2 communication (RX header, 12 or 16ch, for MPX MLink)
+// #define SRXL_COMMUNICATION // control signals ate coming in via SRXL interface (comment it out for classic PWM RC signals)
 
 // CHANNEL LINEARITY SETTINGS  ****************************************************************************************************************
 // Note: avoid these options for excavators!
@@ -820,6 +824,84 @@ boolean channelAutoZero[14] = {
     false, // CH11
     false, // CH12
     false  // CH13
+};
+
+// Channels signal range calibration -----
+const uint16_t pulseNeutral = 30;
+const uint16_t pulseSpan = 480;
+
+// Automatic or manual modes -----
+// #define AUTO_LIGHTS
+// #define AUTO_ENGINE_ON_OFF
+#define AUTO_INDICATORS
+
+// SBUS mode ----
+boolean sbusInverted = true; // true = standard (non inverted) SBUS signal
+
+#endif
+
+// Graupner mc-19 remote configuration profile ---------------------------------------------------------------------------------------------------
+#ifdef GRAUPNER_MC_19
+
+// Channel assignment (use NONE for non existing channels!)
+// Remote channel #######   // Sound controller channel ##########################################
+#define STEERING 4           // CH1 steering
+#define GEARBOX 5            // CH2 3 position switch for gearbox
+#define THROTTLE 1           // CH3 throttle & brake
+#define HORN 7               // CH4 horn
+#define FUNCTION_R 3         // CH5 jake brake, high / low beam, headlight flasher, engine on / off
+#define FUNCTION_L 2         // CH6 indicators, hazards
+#define POT2 8               // CH7 pot 2
+#define MODE1 6              // CH8 mode 1 switch
+#define MODE2 NONE           // CH9 mode 2 switch
+#define MOMENTARY1 NONE      // CH10
+#define HAZARDS 9            // CH11
+#define INDICATOR_LEFT NONE  // CH12
+#define INDICATOR_RIGHT NONE // CH13
+#define INDICATOR_RIGHT NONE // CH14
+#define INDICATOR_RIGHT NONE // CH15
+#define INDICATOR_RIGHT NONE // CH16
+
+// Channels reversed or not
+boolean channelReversed[17] = {
+    false, // CH0 (unused)
+    false, // CH1
+    false, // CH2
+    false, // CH3
+    false, // CH4
+    false, // CH5
+    false, // CH6
+    false, // CH7
+    false, // CH8
+    false, // CH9
+    false, // CH10
+    false, // CH11
+    false, // CH12
+    false  // CH13
+    false, // CH14
+    false  // CH15
+    false, // CH16
+};
+
+// Channels auto zero adjustment or not (don't use it for channels without spring centered neutral position, switches or unused channels)
+boolean channelAutoZero[17] = {
+    false, // CH0 (unused)
+    false, // CH1
+    false, // CH2
+    false, // CH3
+    false, // CH4
+    false, // CH5
+    false, // CH6
+    false, // CH7
+    false, // CH8
+    false, // CH9
+    false, // CH10
+    false, // CH11
+    false, // CH12
+    false  // CH13
+    false, // CH14
+    false  // CH15
+    false, // CH16
 };
 
 // Channels signal range calibration -----
